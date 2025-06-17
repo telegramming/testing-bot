@@ -1,0 +1,8 @@
+{
+  "name": "vercel-fastify-api",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "fastify": "^4.0.0"
+  }
+}
