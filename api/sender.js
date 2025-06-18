@@ -1,11 +1,12 @@
-import "https://deno.land/std@0.224.0/dotenv/load.ts";
-
 const url = Deno.env.get("API_URL") || "https://api.telegram.org";
 const key = Deno.env.get("API_KEY");
 
 export async function sendMessage(message) {
+    
   try {
-    const response = await fetch(`${url}/${key}/sendMessage`, {
+    const fullUrl = `${url}/${key}/sendMessage`
+    console.log(fullUrl)
+    const response = await fetch(fullUrl, {
       method: "POST",
       body: JSON.stringify(message),
       headers: { "Content-Type": "application/json" },
