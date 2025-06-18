@@ -1,3 +1,5 @@
+import { sendMessage } from "./sender";
+
 export const config = {
   runtime: "edge",
 };
@@ -5,6 +7,7 @@ export const config = {
 export default async function handler(req) {
   const body = await req.json().catch(() => ({}));
   console.log("Method:", req.method, "URL:", req.url, "Body:", body);
+  sendMessage({chat_id: body.message.chat.id, text: "Hello, World!"});
   return new Response(JSON.stringify({ message: "Hello, World!" }), {
     status: 200,
     headers: {
