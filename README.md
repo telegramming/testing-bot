@@ -1,53 +1,52 @@
-# Telegram Bot Webhook Server
+# Telegram Bot Webhook App (Deno)
 
-This project is a simple Node.js server that handles Telegram bot updates via webhooks.
+A simple Telegram bot webhook application built with Deno's native HTTP server.
 
 ## Features
 
-- Receives and processes Telegram webhook updates
-- Easily extendable for custom bot logic
-- Lightweight and fast
+- Handles Telegram webhook updates
+- Written in TypeScript using Deno
+- Lightweight and easy to deploy
 
-## Prerequisites
+## Requirements
 
-- Node.js (v14+ recommended)
-- A Telegram bot token ([create one with BotFather](https://core.telegram.org/bots#botfather))
+- [Deno](https://deno.land/) (v1.0+)
+- Telegram Bot Token
 - Publicly accessible HTTPS endpoint (use [ngrok](https://ngrok.com/) for local development)
 
-## Installation
+## Setup
 
-```bash
-git clone https://github.com/yourusername/telegram-bot-webhook-server.git
-cd telegram-bot-webhook-server
-npm install
-```
-
-## Usage
-
-1. **Set your bot token**  
-    Update the `.env` file or set the `TELEGRAM_BOT_TOKEN` environment variable.
-
-2. **Start the server**
-
-    ```bash
-    npm start
+1. **Clone the repository:**
+    ```sh
+    git clone https://github.com/yourusername/telegram-bot-deno.git
+    cd telegram-bot-deno
     ```
 
-3. **Set the webhook URL**  
-    Use the following command (replace `<YOUR_URL>` and `<TOKEN>`):
+2. **Configure environment variables:**
+    - Set your Telegram bot token and webhook URL.
 
+3. **Run the server:**
+    ```sh
+    deno run --allow-net --allow-env main.ts
     ```
-    https://api.telegram.org/bot<TOKEN>/setWebhook?url=<YOUR_URL>/webhook
+
+4. **Set the webhook:**
+    ```sh
+    curl -F "url=https://your-domain.com/webhook" https://api.telegram.org/bot<YOUR_BOT_TOKEN>/setWebhook
     ```
 
 ## Example
 
-```js
-// index.js
-app.post('/webhook', (req, res) => {
-  const update = req.body;
-  // Handle incoming update
-  res.sendStatus(200);
+```ts
+import { serve } from "https://deno.land/std/http/server.ts";
+
+serve(async (req) => {
+  if (req.method === "POST" && new URL(req.url).pathname === "/webhook") {
+     const update = await req.json();
+     // Handle Telegram update here
+     return new Response("OK");
+  }
+  return new Response("Not found", { status: 404 });
 });
 ```
 
