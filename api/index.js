@@ -1,4 +1,4 @@
-import { sendMessage } from "./sender";
+import { sendMessage } from "./sender.js";
 
 export const config = {
   runtime: "edge",
