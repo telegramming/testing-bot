@@ -1,5 +1,7 @@
-const url = process.env.get('API_URL') || 'https://api.telegram.org';
-const key = process.env.get('API_KEY');
+import "https://deno.land/std@0.224.0/dotenv/load.ts";
+
+const url = Deno.env.get('API_URL') || 'https://api.telegram.org';
+const key = Deno.env.get('API_KEY');
 
 export async function sendMessage(message) {
     try {
